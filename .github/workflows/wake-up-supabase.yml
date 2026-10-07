@@ -45,8 +45,10 @@ jobs:
                   has_error = True
                   continue
 
-              # Target Auth Health endpoint which reliably responds HTTP 200 across all key types
-              target_url = f"{url}/auth/v1/health"
+              # Target the PostgREST root endpoint, which queries the database to build its
+              # schema/OpenAPI response. Unlike /auth/v1/health, this counts as real database
+              # activity and resets Supabase's inactivity-pause timer.
+              target_url = f"{url}/rest/v1/"
               print(f"🌐 Pinging Database: {display_name}")
 
               req = urllib.request.Request(
